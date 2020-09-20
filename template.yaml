@@ -1,1 +1,21 @@
-# TODO
+# TODO specify resource Lamba, Event-Trigger
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  My SAM App
+
+  A much easier to follow tutorial than AWS' own.
+
+Resources:
+  EventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: Lambda/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
