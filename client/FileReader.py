@@ -75,5 +75,5 @@ class FileReader(object):
 
 if __name__ == "__main__":
     url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv'
+    jh_dataset = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv?opt_id=oeu1597021073673r0.5796427210291657'
     file = FileReader(url)
-    print(file.get_file())
