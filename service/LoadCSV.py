@@ -3,22 +3,22 @@ from io import BytesIO
 
 
 class LoadCSV(object):
-    """ A class used to read data from a URL and format to BytesIO
+    """ A class used to read data from a URL and parse it to BytesIO
 
     Attributes
     ----------
     _data: str
         a str which will be used to store data <class _io.BytesIO> (default None)
     _url: str
-        the url which will be used to retreive the data (default None)
+        the url which will be used to retrieve the data (default None)
     Methods
     -------
     load_csv()
         Makes the call to the url
     format_data()
-        Convert <class byte> to a pandas dataframe readable format
+        Convert <class byte> to <class _io.BytesIO> format
     get_data()
-        Returns the data retrived from the URL
+        Returns the data retrieved from the URL
     """
 
     _data = None
@@ -48,6 +48,4 @@ class LoadCSV(object):
         self._data = BytesIO(raw_data)
 
     def get_data(self):
-        if self._data is None:
-            self.write_to_file()
         return self._data
