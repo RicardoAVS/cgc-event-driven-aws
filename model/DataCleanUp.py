@@ -3,29 +3,42 @@ import pandas as pd
 
 
 class DataCleanUp(object):
+    _data_frame = None
 
-    url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv'
-    jh_url = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv?opt_id=oeu1597021073673r0.5796427210291657'
+    def __init__(self, url1: str):
+        self._dataset_one = LoadCSV(url1).get_data()
+        self.create_df()
 
-    # __init__
-    ny_file = LoadCSV(url)
-    jh_file = LoadCSV(jh_url)
+    def create_df(self):
+        _raw_data = self._dataset_one
+        self._data_frame = self.byte_pd_df(_raw_data)
 
-    # get url
-    ny_byte_data = ny_file.get_data()
+    @staticmethod
+    def byte_pd_df(_raw_data):
+        pd_obj = pd.read_csv(_raw_data)
+        return pd.DataFrame(pd_obj)
 
-    # Read data
-    ny_data = pd.read_csv(ny_byte_data)
-    jh_data = pd.read_csv(jh_url)
+    def merge_df(self, _url=None):
+        if _url is None or not isinstance(_url, str):
+            raise Exception('Must provide an valid url format')
+        data_frame = self.byte_pd_df(_url)
+        recover_cases = self.find_recovered_cases(data_frame)
 
-    # parse date column to a date object
-    ny_data['date'] = pd.to_datetime(ny_data['date'])
+        self._data_frame['date'] = self.str_to_date(self._data_frame)
+        self._data_frame['recovered'] = pd.Series(cases for cases in recover_cases)
+        return data_frame
 
-    # clean_up: Find which are the recovered cases
-    jh_data_frame = pd.DataFrame(jh_data)
-    by_country = jh_data_frame[jh_data_frame['Country/Region'] == 'US']
-    recover_cases = by_country['Recovered']
+    @staticmethod
+    def str_to_date(data_frame):
+        return pd.to_datetime(data_frame['date'])
 
-    data_frame = pd.DataFrame(ny_data)
-    data_frame['recovered'] = pd.Series(cases for cases in recover_cases)
+    @staticmethod
+    def find_recovered_cases(data_frame):
+        by_country = data_frame[data_frame['Country/Region'] == 'US']
+        return by_country['Recovered']
+
+    @property
+    def get_data_frame(self):
+        return self._data_frame
+
 
