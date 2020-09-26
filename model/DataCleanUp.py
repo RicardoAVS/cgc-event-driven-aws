@@ -3,10 +3,27 @@ import pandas as pd
 
 
 class DataCleanUp(object):
+    """ A class used to Perform data manipulations
+
+    Attributes
+    ----------
+    _data_frame: pandas.DataFrame
+        used to store csv data as a pandas Data Frame (default None)
+    Methods
+    -------
+    create_df()
+        Store in _data_frame the instance of the pandas.DataFrame
+    byte_pd_df()
+        parse the raw data to a pandas.DataFrame
+    merge_df()
+        Do the manipulation and data convertion which then will be stored
+        in _data_frame
+    """
+
     _data_frame = None
 
     def __init__(self, url1: str):
-        self._dataset_one = LoadCSV(url1).get_data()
+        self._dataset_one = LoadCSV(url1)
         self.create_df()
 
     def create_df(self):
