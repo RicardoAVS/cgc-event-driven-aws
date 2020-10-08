@@ -23,7 +23,7 @@ class DataCleanUp(object):
     _data_frame = None
 
     def __init__(self, url1: str):
-        self._dataset_one = LoadCSV(url1)
+        self._dataset_one = LoadCSV(url1).data
         self.create_df()
 
     def create_df(self):
@@ -55,7 +55,16 @@ class DataCleanUp(object):
         return by_country['Recovered']
 
     @property
-    def get_data_frame(self):
+    def data_frame(self):
         return self._data_frame
 
 
+if __name__ == '__main__':
+    url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv'
+    jh_dataset = 'https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv?opt_id=oeu1597021073673r0.5796427210291657'
+    df = DataCleanUp(url)
+    df.merge_df(jh_dataset)
+    print(df._data_frame)
+
+    data_f = df._data_frame.to_dict('dict')
+    print(data_f['date'])
