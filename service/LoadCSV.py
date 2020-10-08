@@ -47,5 +47,6 @@ class LoadCSV(object):
     def format_data(self, raw_data):
         self._data = BytesIO(raw_data)
 
-    def get_data(self):
+    @property
+    def data(self):
         return self._data
