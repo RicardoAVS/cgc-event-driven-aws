@@ -1,4 +1,4 @@
 .idea/*
 nootebooks/*
 .ipynb_checkpoints/*
-/Service/__pycache__/*
+/service/__pycache__/*

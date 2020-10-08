@@ -31,11 +31,11 @@ class DataCleanUp(object):
         self._data_frame = self.byte_pd_df(_raw_data)
 
     @staticmethod
-    def byte_pd_df(_raw_data):
+    def panda_df(_raw_data):
         pd_obj = pd.read_csv(_raw_data)
         return pd.DataFrame(pd_obj)
 
-    def merge_df(self, _url=None):
+    def merge_data_frame(self, _url=None):
         if _url is None or not isinstance(_url, str):
             raise Exception('Must provide an valid url format')
         data_frame = self.byte_pd_df(_url)
@@ -50,7 +50,7 @@ class DataCleanUp(object):
         return pd.to_datetime(data_frame['date'])
 
     @staticmethod
-    def find_recovered_cases(data_frame):
+    def recovered_cases(data_frame):
         by_country = data_frame[data_frame['Country/Region'] == 'US']
         return by_country['Recovered']
 
